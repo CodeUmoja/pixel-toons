@@ -3,6 +3,8 @@ const grey = "#e3e3e3";
 
 const pencilColor = "#ff00dd";
 
+let drawing = false;
+
 const get_grey = (i, canvas) => {
     if (i > 0) {
         return canvas.pixels[i - 1][0] != grey; //opposite to first pixel of previous row
@@ -15,6 +17,18 @@ const create_pixel = (color) => {
     let pixel = document.createElement("div");
     pixel.style.backgroundColor = color;
     pixel.classList.add("pixel");
+    pixel.onmousedown = () => {
+        console.log("clicked");
+        drawing = true;
+    };
+    document.onmouseup = () => {
+        drawing = false;
+    };
+    pixel.onmousemove = () => {
+        if (drawing) {
+            pixel.style.backgroundColor = pencilColor;
+        }
+    };
     return pixel;
 };
 
