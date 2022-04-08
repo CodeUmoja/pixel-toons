@@ -7,7 +7,7 @@ let drawing = false;
 
 const get_grey = (i, canvas) => {
     if (i > 0) {
-        return canvas.pixels[i - 1][0] != grey; //opposite to first pixel of previous row
+        return canvas.pixels[i - 1][0] !== grey; //opposite to first pixel of previous row
     } else {
         return false;
     }
@@ -44,7 +44,7 @@ const render_canvas = (canvas) => {
     }
 };
 
-const create_canvas = () => {
+export const create_canvas = () => {
     const canvas = { pixels: [], height: 40, width: 40 }; //canvas is a matrix of pixels
 
     for (let i = 0; i < canvas.height; i++) {
@@ -58,5 +58,3 @@ const create_canvas = () => {
 
     render_canvas(canvas);
 };
-
-window.onload = create_canvas;
