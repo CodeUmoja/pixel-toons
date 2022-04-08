@@ -1,7 +1,7 @@
 const white = "#ffffff";
 const grey = "#e3e3e3";
 
-const pencilColor = "#ff00dd";
+const pencilColor = "#ff0000";
 
 let drawing = false;
 
@@ -18,7 +18,6 @@ const create_pixel = (color) => {
     pixel.style.backgroundColor = color;
     pixel.classList.add("pixel");
     pixel.onmousedown = () => {
-        console.log("clicked");
         drawing = true;
     };
     document.onmouseup = () => {
