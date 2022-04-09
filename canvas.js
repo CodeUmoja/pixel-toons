@@ -33,6 +33,13 @@ const create_pixel = (color) => {
 };
 
 const render_canvas = (canvas) => {
+    let canvasParent = document.createElement("div");
+    canvasParent.classList.add("canvas-parent");
+    let canvasElement = document.createElement("div");
+    canvasElement.classList.add("canvas-element");
+    document.body.appendChild(canvasParent);
+    canvasParent.appendChild(canvasElement);
+
     for (let i = 0; i < canvas.height; i++) {
         let row = document.createElement("div");
         row.classList.add("pixel-row");
@@ -40,7 +47,7 @@ const render_canvas = (canvas) => {
             let pixel = create_pixel(canvas.pixels[i][j]);
             row.appendChild(pixel);
         }
-        document.body.appendChild(row);
+        canvasElement.appendChild(row);
     }
 };
 
