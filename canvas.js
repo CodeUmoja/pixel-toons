@@ -1,6 +1,31 @@
+import { Color } from "./color.js";
+
+/*
+Class that represents an image.
+Parameter pixels represents a matrix of colors.
+ */
+class Image {
+    //Create a basic image and set all pixels to black and fully transparent
+    constructor({ width, height }) {
+        this.width = width;
+        this.height = height;
+
+        this.pixels = [];
+        for (let i = 0; i < height; i++) {
+            this.pixels[i] = [];
+            for (let j = 0; j < width; j++) {
+                this.pixels[i][j] = new Color(0, 0, 0, 0);
+            }
+        }
+    }
+
+    setPixel(i, j, color) {
+        this.pixels[i][j] = Color.fromHex(color);
+    }
+}
+
 const white = "#ffffff";
 const grey = "#e3e3e3";
-
 const pencilColor = "#ff00dd";
 
 let drawing = false;
@@ -52,7 +77,7 @@ const render_canvas = (canvas) => {
 };
 
 export const create_canvas = () => {
-    const canvas = { pixels: [], height: 40, width: 40 }; //canvas is a matrix of pixels
+    const canvas = { pixels: [], width: 40, height: 40 };
 
     for (let i = 0; i < canvas.height; i++) {
         let is_grey = get_grey(i, canvas);
