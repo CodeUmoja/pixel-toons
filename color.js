@@ -21,7 +21,7 @@ export class Color {
 
   //Converts color to RGBA CSS format. Use when passing color to CSS style parameter
   toString() {
-	  let converted = "rbga(" + this.r +"," + this.g +"," + this.b +"," + this.alpha);
-      return converted;
+	let converted = "rbga(" + this.r + "," + this.g + "," + this.b + "," + this.alpha + ")";
+   return converted;
   }
 }
