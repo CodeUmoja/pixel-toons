@@ -1,0 +1,19 @@
+{
+  "name": "pixel-toons",
+  "version": "1.0.0",
+  "description": "-",
+  "main": "index.js",
+  "scripts": {
+    "test": "none"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CodeUmoja/pixel-toons.git"
+  },
+  "author": "Umoja",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/CodeUmoja/pixel-toons/issues"
+  },
+  "homepage": "https://github.com/CodeUmoja/pixel-toons#readme"
+}
