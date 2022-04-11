@@ -16,8 +16,7 @@ export class Color {
     const r = parseInt(hexColor.slice(1, 3), 16);
     const g = parseInt(hexColor.slice(3, 5), 16);
     const b = parseInt(hexColor.slice(5, 7), 16);
-    const res = { r, g, b };
-    return res;
+    return new Color(r, g, b);
   }
 
   //Converts color to HEX format
