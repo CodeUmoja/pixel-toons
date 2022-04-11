@@ -21,10 +21,11 @@ export class Color {
   }
 
   //Converts color to HEX format
-  toHex(rgbColor) {
+  rgbToHex(rgbColor) {
     let hex = '0x';
     for (const key in rgbColor) {
       hex += rgbColor[key].toString(16);
+      if (rgbColor[key] === 0) hex += '0';
     }
     const res = hex;
     return res;
