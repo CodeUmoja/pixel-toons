@@ -1,62 +1,67 @@
-const white = "#ffffff";
-const grey = "#e3e3e3";
+'use strict';
 
-const pencilColor = "#ff00dd";
+const white = '#ffffff';
+const grey = '#e3e3e3';
+
+const canvasPixelColor1 = grey;
+const canvasPixelColor2 = white;
+
+const pencilColor = '#ff00dd';
 
 let drawing = false;
 
-const get_grey = (i, canvas) => {
-    if (i > 0) {
-        return canvas.pixels[i - 1][0] != grey; //opposite to first pixel of previous row
-    } else {
-        return false;
-    }
-}
-
-const create_pixel = (color) => {
-    let pixel = document.createElement("div");
-    pixel.style.backgroundColor = color;
-    pixel.classList.add("pixel");
-    pixel.onmousedown = () => {
-        console.log("clicked");
-        drawing = true;
-    };
-    document.onmouseup = () => {
-        drawing = false;
-    };
-    pixel.onmousemove = () => {
-        if (drawing) {
-            pixel.style.backgroundColor = pencilColor;
-        }
-    };
-    return pixel;
+const getColor = (i, canvas) => {
+  if (i > 0) {
+    return canvas.pixels[i - 1][0] !== canvasPixelColor1; //opposite to first pixel of previous row
+  } else {
+    return false;
+  }
 };
 
-const render_canvas = (canvas) => {
-    for (let i = 0; i < canvas.height; i++) {
-        let row = document.createElement("div");
-        row.classList.add("pixel-row");
-        for (let j = 0; j < canvas.width; j++) {
-            let pixel = create_pixel(canvas.pixels[i][j]);
-            row.appendChild(pixel);
-        }
-        document.body.appendChild(row);
+const createPixel = (color) => {
+  const pixel = document.createElement('div');
+  pixel.style.backgroundColor = color;
+  pixel.classList.add('pixel');
+  pixel.onmousedown = () => {
+    console.log('clicked');
+    drawing = true;
+  };
+  document.onmouseup = () => {
+    drawing = false;
+  };
+  pixel.onmousemove = () => {
+    if (drawing) {
+      pixel.style.backgroundColor = pencilColor;
     }
+  };
+  return pixel;
 };
 
-const create_canvas = () => {
-    const canvas = { pixels: [], height: 40, width: 40 }; //canvas is a matrix of pixels
-
-    for (let i = 0; i < canvas.height; i++) {
-        let is_grey = get_grey(i, canvas);
-        canvas.pixels[i] = [];
-        for (let j = 0; j < canvas.width; j++) {
-            canvas.pixels[i][j] = is_grey ? grey : white;
-            is_grey = !is_grey;
-        }
+const renderCanvas = (canvas) => {
+  for (let i = 0; i < canvas.height; i++) {
+    const row = document.createElement('div');
+    row.classList.add('pixel-row');
+    for (let j = 0; j < canvas.width; j++) {
+      const pixel = createPixel(canvas.pixels[i][j]);
+      row.appendChild(pixel);
     }
-
-    render_canvas(canvas);
+    document.body.appendChild(row);
+  }
 };
 
-window.onload = create_canvas;
+const createCanvas = () => {
+  const canvas = { pixels: [], height: 40, width: 40 }; //canvas is a matrix of pixels
+
+  for (let i = 0; i < canvas.height; i++) {
+    let pixelColor = getColor(i, canvas);
+    canvas.pixels[i] = [];
+    for (let j = 0; j < canvas.width; j++) {
+      canvas.pixels[i][j] = pixelColor ? canvasPixelColor1 : canvasPixelColor2;
+      pixelColor = !pixelColor;
+    }
+  }
+
+  renderCanvas(canvas);
+};
+
+window.onload = createCanvas;
