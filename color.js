@@ -21,7 +21,13 @@ export class Color {
   }
 
   //Converts color to HEX format
-  toHex() {
+  toHex(rgbColor) {
+    let hex = '0x';
+    for (const key in rgbColor) {
+      hex += rgbColor[key].toString(16);
+    }
+    const res = hex;
+    return res;
   }
 
   //Converts color to RGBA CSS format. Use when passing color to CSS style parameter
