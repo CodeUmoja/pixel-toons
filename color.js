@@ -12,7 +12,7 @@ export class Color {
   }
 
   //"Factory method" that creates color from given HEX value
-  static hexToRGB(hexColor) {
+  static fromHex(hexColor) {
     const r = parseInt(hexColor.slice(1, 3), 16);
     const g = parseInt(hexColor.slice(3, 5), 16);
     const b = parseInt(hexColor.slice(5, 7), 16);
@@ -21,7 +21,7 @@ export class Color {
   }
 
   //Converts color to HEX format
-  rgbToHex(rgbColor) {
+  toHex(rgbColor) {
     let hex = '0x';
     for (const key in rgbColor) {
       hex += rgbColor[key].toString(16);
