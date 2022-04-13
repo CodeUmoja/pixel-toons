@@ -1,4 +1,28 @@
-'use strict';
+import { Color } from './color.js';
+
+/*
+Class that represents an image.
+Parameter pixels represents a matrix of colors.
+ */
+export class Image {
+  //Create a basic image and set all pixels to black and fully transparent
+  constructor({ width, height }) {
+    this.width = width;
+    this.height = height;
+
+    this.pixels = [];
+    for (let i = 0; i < height; i++) {
+      this.pixels[i] = [];
+      for (let j = 0; j < width; j++) {
+        this.pixels[i][j] = new Color(0, 0, 0, 0);
+      }
+    }
+  }
+
+  setPixel(i, j, color) {
+    this.pixels[i][j] = Color.fromHex(color);
+  }
+}
 
 const white = '#ffffff';
 const grey = '#e3e3e3';
@@ -10,17 +34,11 @@ const pencilColor = '#ff00dd';
 
 let drawing = false;
 
-const getColor = (i, canvas) => {
-  if (i > 0) {
-    return canvas.pixels[i - 1][0] !== canvasPixelColor1; //opposite to first pixel of previous row
-  } else {
-    return false;
-  }
-};
+const getColor = (i, j) => i % 2 !== j % 2;
 
 const createPixel = (color) => {
   const pixel = document.createElement('div');
-  pixel.style.backgroundColor = color;
+  pixel.style.backgroundColor = color.toString();
   pixel.classList.add('pixel');
   pixel.onmousedown = () => {
     console.log('clicked');
@@ -38,6 +56,13 @@ const createPixel = (color) => {
 };
 
 const renderCanvas = (canvas) => {
+  const canvasParent = document.createElement('div');
+  canvasParent.classList.add('canvas-parent');
+  const canvasElement = document.createElement('div');
+  canvasElement.classList.add('canvas-element');
+  document.body.appendChild(canvasParent);
+  canvasParent.appendChild(canvasElement);
+
   for (let i = 0; i < canvas.height; i++) {
     const row = document.createElement('div');
     row.classList.add('pixel-row');
@@ -45,23 +70,20 @@ const renderCanvas = (canvas) => {
       const pixel = createPixel(canvas.pixels[i][j]);
       row.appendChild(pixel);
     }
-    document.body.appendChild(row);
+    canvasElement.appendChild(row);
   }
 };
 
-const createCanvas = () => {
-  const canvas = { pixels: [], height: 40, width: 40 }; //canvas is a matrix of pixels
+export const createCanvas = () => {
+  const canvas = new Image({ width: 40, height: 40 });
 
   for (let i = 0; i < canvas.height; i++) {
-    let pixelColor = getColor(i, canvas);
     canvas.pixels[i] = [];
     for (let j = 0; j < canvas.width; j++) {
-      canvas.pixels[i][j] = pixelColor ? canvasPixelColor1 : canvasPixelColor2;
-      pixelColor = !pixelColor;
+      const pixelColor = getColor(i, j) ? canvasPixelColor1 : canvasPixelColor2;
+      canvas.setPixel(i, j, pixelColor);
     }
   }
 
   renderCanvas(canvas);
 };
-
-window.onload = createCanvas;
