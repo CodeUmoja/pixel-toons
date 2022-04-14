@@ -1,8 +1,8 @@
-//import { Image } from './canvas.js';
-
 /*
 Creating a byte array which represents an image file of BMP24 format.
 Each pixel will be represented as a triplet of bytes: red, green and blue intensity accordingly.
+Refer to this link if you want to know more about BMP file format
+http://www.ece.ualberta.ca/~elliott/ee552/studentAppNotes/2003_w/misc/bmp_file_format/bmp_file_format.htm
  */
 
 class Buffer {
@@ -22,6 +22,11 @@ class Buffer {
   write32Integer(number, offset) {
     const array = intToByteArray(number, 4);
     this.data.set(array, offset);
+  }
+
+  writeColor({r, g, b}, offset) {
+    //color is stored in reversed BGR order
+    this.data.set([b, g, r], offset);
   }
 }
 
@@ -48,7 +53,7 @@ function intToByteArray(number, size) {
   return array;
 }
 
-const bmpEncode = (image) => {
+export const bmpEncode = (image) => {
   const perPixel = 3 * 8;
 
   const padding = image.width % 4;
@@ -97,7 +102,21 @@ const bmpEncode = (image) => {
   //Colors Used | 4 bytes | 0x2E | Number of actually used colors
   data.write32Integer(0, 0x2E);
   //Important Colors | 4 bytes | 0x32 | Number of important colors
-  data.write32Integer(0, 0x2E);
+  data.write32Integer(0, 0x32);
+
+  /*
+  Setting up Pixel Data
+   */
+
+  let position = 0x36;
+
+  for (let i = image.width - 1; i >= 0; i--) {
+    for (let j = 0; j < image.height; j++) {
+      data.writeColor(image.pixels[i][j], position);
+      position += 3;
+    }
+    position += padding;
+  }
 
   return data;
 };
