@@ -1,3 +1,9 @@
-import { createCanvas } from "./canvas.js";
+import { renderCanvas } from './canvas_renderer.js';
+import { Canvas } from './canvas.js';
 
-window.onload = createCanvas;
+const canvasWidth = 40;
+const canvasHeight = 40;
+
+window.onload = () => {
+  renderCanvas(new Canvas({ width: canvasWidth, height: canvasHeight }));
+};

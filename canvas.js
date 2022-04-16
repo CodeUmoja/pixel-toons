@@ -24,66 +24,49 @@ export class Image {
   }
 }
 
-const white = '#ffffff';
-const grey = '#e3e3e3';
+/*
+Class-wrapper for an image or a few different image layers
+ */
+export class Canvas {
 
-const canvasPixelColor1 = grey;
-const canvasPixelColor2 = white;
+  constructor({ width, height }) {
+    const image = new Image({ width, height });
+    this.width = width;
+    this.height = height;
+    this.image = image;
 
-const pencilColor = '#ff00dd';
-
-let drawing = false;
-
-const getColor = (i, j) => i % 2 !== j % 2;
-
-const createPixel = (color) => {
-  const pixel = document.createElement('div');
-  pixel.style.backgroundColor = color.toString();
-  pixel.classList.add('pixel');
-  pixel.onmousedown = () => {
-    console.log('clicked');
-    drawing = true;
-  };
-  document.onmouseup = () => {
-    drawing = false;
-  };
-  pixel.onmousemove = () => {
-    if (drawing) {
-      pixel.style.backgroundColor = pencilColor;
-    }
-  };
-  return pixel;
-};
-
-const renderCanvas = (canvas) => {
-  const canvasParent = document.createElement('div');
-  canvasParent.classList.add('canvas-parent');
-  const canvasElement = document.createElement('div');
-  canvasElement.classList.add('canvas-element');
-  document.body.appendChild(canvasParent);
-  canvasParent.appendChild(canvasElement);
-
-  for (let i = 0; i < canvas.height; i++) {
-    const row = document.createElement('div');
-    row.classList.add('pixel-row');
-    for (let j = 0; j < canvas.width; j++) {
-      const pixel = createPixel(canvas.pixels[i][j]);
-      row.appendChild(pixel);
-    }
-    canvasElement.appendChild(row);
-  }
-};
-
-export const createCanvas = () => {
-  const canvas = new Image({ width: 40, height: 40 });
-
-  for (let i = 0; i < canvas.height; i++) {
-    canvas.pixels[i] = [];
-    for (let j = 0; j < canvas.width; j++) {
-      const pixelColor = getColor(i, j) ? canvasPixelColor1 : canvasPixelColor2;
-      canvas.setPixel(i, j, pixelColor);
-    }
+    this.clear();
   }
 
-  renderCanvas(canvas);
-};
+  clear() {
+    createBasicBackground(this.image);
+  }
+
+  clearPixel(i, j) {
+    this.image.setPixel(i, j, getClearPixelColor(i, j));
+  }
+
+}
+
+//Colors for creating a basic grey-white background
+const transparentColorFirst = '#ffffff';
+const transparentColorSecond = '#e3e3e3';
+
+//Function to turn image into a basic grey-white background which indicates transparency
+function createBasicBackground(image) {
+  for (let i = 0; i < image.height; i++) {
+    for (let j = 0; j < image.width; j++) {
+      const pixelColor = getClearPixelColor(i, j);
+      image.setPixel(i, j, pixelColor);
+    }
+  }
+}
+
+//Get color of transparent pixel based on its coordinates
+function getClearPixelColor(i, j) {
+  if (i % 2 !== j % 2) { //the condition makes sure that neighbouring pixels are always of different color
+    return transparentColorFirst; //first pixel is always white
+  } else {
+    return transparentColorSecond;
+  }
+}
