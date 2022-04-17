@@ -2,6 +2,7 @@
 Set of functions which define how canvas is rendered into HTML.
  */
 
+const CANVAS_PARETN_ID = 'canvas-parent';
 const pencilColor = '#ff00dd';
 let drawing = false;
 
@@ -21,7 +22,7 @@ export const renderCanvas = (canvas) => {
 
 function createCanvasElement() {
   const canvasParent = document.createElement('div'); //parent-wrapper is needed for effective zooming
-  canvasParent.classList.add('canvas-parent');
+  canvasParent.id = 'canvas-parent';
 
   const canvasElement = document.createElement('div');
   canvasElement.classList.add('canvas-element');
@@ -44,6 +45,8 @@ function createPixelElement(canvas, i, j) {
   const color = canvas.image.pixels[i][j];
 
   pixelElement.style.backgroundColor = color.toString();
+  pixelElement.style.width = getPixelSize(canvas) + 'px';
+  pixelElement.style.height = getPixelSize(canvas) + 'px';
   pixelElement.classList.add('pixel');
 
   const setOnImageColor = (color) => {
@@ -69,4 +72,10 @@ function setPixelEvents(pixelElement, setOnImageColor) {
       setOnImageColor(pencilColor);
     }
   };
+}
+
+function getPixelSize(canvas) {
+  const parent = document.getElementById(CANVAS_PARETN_ID);
+  console.log(parent.offsetWidth / canvas.getWidth());
+  return parent.offsetWidth / canvas.getWidth();
 }
