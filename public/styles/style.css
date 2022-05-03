@@ -1,0 +1,35 @@
+body {
+    background-color: #000;
+    margin: 0;
+}
+
+.pixel {
+    width: 10pt;
+    height: 13px;
+    background-color: #e3e3e3;
+    display: inline-block;
+
+    user-drag: none;
+    -webkit-user-drag: none;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+
+    overflow: scroll;
+}
+
+.pixel-row {
+    font-size: 0;
+    white-space: nowrap;
+}
+
+.canvas {
+    zoom: 1;
+}
+
+#canvas-parent {
+    overflow: scroll;
+    width: 550px;
+    height: 550px;
+}
