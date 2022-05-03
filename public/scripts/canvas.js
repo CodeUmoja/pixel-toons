@@ -38,6 +38,14 @@ export class Canvas {
     this.clear();
   }
 
+  getWidth() {
+    return this.width;
+  }
+
+  getHeight() {
+    return this.height;
+  }
+
   clear() {
     createBasicBackground(this.image);
   }

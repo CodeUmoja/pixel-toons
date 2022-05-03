@@ -5,7 +5,7 @@ body {
 
 .pixel {
     width: 10pt;
-    height: 10pt;
+    height: 13px;
     background-color: #e3e3e3;
     display: inline-block;
 
@@ -28,7 +28,7 @@ body {
     zoom: 1;
 }
 
-.canvas-parent {
+#canvas-parent {
     overflow: scroll;
     width: 550px;
     height: 550px;
